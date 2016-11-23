@@ -31,7 +31,7 @@ export class DataDrivenComponent {
 
     this.myForm = formBuilder.group({
       'userData': formBuilder.group({
-        'username': ['Max', Validators.required],
+        'username': ['Max', [Validators.required, this.exampleValidator]],
         'email': ['', [
           Validators.required, 
           Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
@@ -45,11 +45,18 @@ export class DataDrivenComponent {
     });
   }
 
+  onAddHobby() {
+    (<FormArray>this.myForm.controls['hobbies']).push(new FormControl('', Validators.required));
+  }
+
   onSubmit() {
     console.log(this.myForm);
   }
 
-  onAddHobby() {
-    (<FormArray>this.myForm.controls['hobbies']).push(new FormControl('', Validators.required));
+  exampleValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value === 'Example') {
+      return {example: true};
+    }
+    return null;
   }
 }
