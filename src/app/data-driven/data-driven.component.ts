@@ -87,4 +87,8 @@ export class DataDrivenComponent {
 
     return promise;
   }
+
+   onReset() {
+      this.myForm.reset(); 
+   }
 }
